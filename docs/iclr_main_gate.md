@@ -2,18 +2,18 @@
 
 Paper: 85 minimum_intervention_human_correction
 
-Existing v2 decision: KILL_ARCHIVE
+Existing v3 decision: KILL_ARCHIVE
 
 Gate verdict: KILL_ARCHIVE
 
-Evidence digest: 809606ea2d1ebf29
+Evidence digest: v4-minimum-intervention-negative
 
 Fatal blockers:
-- Synthetic-only evidence.
-- Template-generated experiment and writing.
+- Local-only human-correction evidence.
+- Non-decisive task-success gain over uncertainty querying.
+- Full objective validated by tradeoffs, not success dominance.
 - No real robot or high-fidelity benchmark.
-- No trained WAM/model checkpoint.
-- No implemented real baselines.
+- No trained boundary model from real human correction traces.
 - No manual exhaustive related-work synthesis.
 
 The only honest main-conference-safe decision is to archive rather than overclaim.
