@@ -4,42 +4,153 @@
 \usepackage{hyperref}
 \usepackage{url}
 \usepackage{booktabs}
-\title{Minimum-Intervention Human Correction: ICLR Main-Conference Gate Archive}
+\usepackage{graphicx}
+
+\graphicspath{{../figures/}}
+
+\title{Minimum-Intervention Human Correction:\\A Negative ICLR-Main Evidence Audit}
 \author{Anonymous Authors}
+
 \begin{document}
 \maketitle
+
 \begin{abstract}
-This document is not an ICLR main-conference submission. It is the v3 main-conference gate for a generated robotics draft about interactive robot learning. The original research bet was: Learn from the smallest human correction that changes physical outcome. After a stricter hostile review, the honest terminal decision is \textbf{KILL/ARCHIVE}. Submission-hardening version: v3.
+Human correction data in robotics is usually treated as another demonstration, preference, or residual action. The hypothesis tested here is sharper: the smallest human intervention that changes a physical outcome should identify the local decision boundary more efficiently than full demonstrations or large residual corrections. We rebuilt this paper around a deterministic local benchmark with four manipulation tasks, five correction-shift splits, eight methods, seven seeds, 53,760 main rollouts, 9,408 ablation rollouts, and 117,600 stress rollouts. The result is informative but not submission-ready. On the combined hard-shift split, the minimum-intervention learner reaches 0.569 task success, 0.769 correction efficiency, and 0.030 damage. The best success baseline, uncertainty querying, reaches 0.537 success, 0.603 efficiency, and 0.078 damage. This is promising, but the paired task-success gain is only $0.032 \pm 0.046$, and an ablation without human-effort cost slightly exceeds task success while losing the intended efficiency/damage tradeoff. We therefore mark this paper \textbf{KILL/ARCHIVE}: the idea is worth revisiting, but the present evidence does not clear an ICLR-main-target claim.
 \end{abstract}
 
-\section{Gate Decision}
-The v2 paper was workshop-only. Under the active ICLR-main standard, that is insufficient. The local artifacts contain synthetic multi-seed diagnostics, but no real-robot validation, high-fidelity simulator benchmark, trained world-action model, implemented real baselines, or manual full-paper related-work synthesis. These missing items are not recoverable by editing text or rerunning the synthetic script.
+\section{Terminal Decision}
+\textbf{Decision: KILL/ARCHIVE for ICLR main.} The v4 repository contains a paper-specific benchmark, strong baselines, ablations, stress tests, figures, and reproducibility files. The evidence shows a useful tradeoff, but not a decisive submission claim: the proposed learner improves human burden and damage, yet the task-success margin over the strongest active-query baseline is not statistically convincing.
 
-\section{Fatal ICLR-Main Blockers}
+\section{Research Question}
+The intended claim was:
+\begin{quote}
+Learn from the smallest human correction that changes physical outcome.
+\end{quote}
+This is a meaningful distinction. A full correction may solve the immediate trial while hiding the boundary between failure and success. A minimal intervention should reveal just enough physical information to update the robot's local model while reducing human burden, overcorrection damage, and intent drift.
+
+\section{Benchmark}
+The v4 benchmark simulates four contact-rich manipulation tasks: peg insertion, drawer alignment, cloth corner placement, and cup handoff pose. Each episode has a latent physical boundary, a robot policy gap, a human correction vector, overcorrection bias, delayed feedback drift, correction noise, and intent ambiguity. The five splits are:
 \begin{itemize}
-\item Evidence is synthetic and generated from a shared batch template.
-\item Baselines are diagnostic probability models, not implemented competing robot systems.
-\item Ablations do not correspond to a trained model checkpoint.
-\item No hardware, high-fidelity benchmark, qualitative rollouts, or failure videos are available.
-\item Related work is based on pool slices and hostile metadata, not a manual full-paper synthesis.
-\item Claims would be misleading if framed as ICLR-main empirical robotics evidence.
+\item \textbf{nominal correction}
+\item \textbf{overcorrection bias}
+\item \textbf{delayed feedback}
+\item \textbf{ambiguous intent}
+\item \textbf{combined hard shift}
+\end{itemize}
+Metrics include task success, intervention magnitude, correction efficiency, overcorrection ratio, damage, intent preservation, boundary error, query rate, and calibration error.
+
+\section{Methods}
+We compare:
+\begin{itemize}
+\item \textbf{No-human baseline:} executes without correction.
+\item \textbf{Full-demo imitation:} imitates the full human correction vector.
+\item \textbf{DAgger full correction:} smooths repeated full corrections.
+\item \textbf{Residual correction learner:} projects human feedback into a residual action.
+\item \textbf{Preference-only ranker:} chooses among correction magnitudes without vector learning.
+\item \textbf{Uncertainty query policy:} requests correction when uncertainty is high.
+\item \textbf{Minimum-intervention learner:} estimates the smallest boundary-crossing correction with intent and effort terms.
+\item \textbf{Oracle minimal correction:} hidden true minimal correction.
 \end{itemize}
 
-\section{Hostile Prior-Work Pressure}
-The closest local hostile records include:
+\section{Main Results}
+Table~\ref{tab:main} shows the combined hard-shift split. The proposed method has the best non-oracle task success, much better correction efficiency than full correction baselines, lower damage, and substantially lower boundary error. However, the paired success gain over uncertainty querying is only $0.03199 \pm 0.04562$, so the positive claim is not decisive.
+
+\begin{table}[h]
+\centering
+\caption{Combined hard-shift results over seven seeds. Confidence intervals are 95\% intervals over seed means.}
+\label{tab:main}
+\begin{tabular}{lrrrr}
+\toprule
+Method & Task success & Magnitude & Efficiency & Damage \\
+\midrule
+No human & $0.187 \pm 0.015$ & $0.000$ & $0.000$ & $0.037$ \\
+Full-demo imitation & $0.513 \pm 0.015$ & $0.880$ & $0.522$ & $0.088$ \\
+DAgger full correction & $0.509 \pm 0.028$ & $0.741$ & $0.561$ & $0.068$ \\
+Residual correction & $0.532 \pm 0.026$ & $0.689$ & $0.612$ & $0.063$ \\
+Preference-only ranker & $0.499 \pm 0.030$ & $\mathbf{0.510}$ & $0.647$ & $0.033$ \\
+Uncertainty query & $0.537 \pm 0.026$ & $0.779$ & $0.603$ & $0.078$ \\
+Minimum intervention & $\mathbf{0.569 \pm 0.025}$ & $0.617$ & $\mathbf{0.769}$ & $\mathbf{0.030}$ \\
+Oracle minimal & $0.658 \pm 0.023$ & $0.593$ & $0.888$ & $0.045$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.88\linewidth]{minimum_intervention_success.png}
+\caption{Task success across splits. The proposed method is useful, but its hard-split advantage over uncertainty querying is too small for a positive main claim.}
+\label{fig:success}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.86\linewidth]{minimum_intervention_efficiency.png}
+\caption{Success and normalized correction efficiency on combined hard shift. Minimum intervention improves the burden/success tradeoff.}
+\label{fig:efficiency}
+\end{figure}
+
+\section{Ablations}
+The ablations support some parts of the mechanism but not enough for a main-conference claim. Removing the minimum-norm objective or imitating all corrections hurts efficiency and damage. Removing the counterfactual boundary hurts success. However, removing the human-effort cost slightly improves task success, which means the full objective is not uniquely justified by success alone.
+
+\begin{table}[h]
+\centering
+\caption{Minimum-intervention ablations on combined hard shift.}
+\label{tab:ablation}
+\begin{tabular}{lrrrr}
+\toprule
+Ablation & Task success & Magnitude & Efficiency & Damage \\
+\midrule
+Full minimum-intervention learner & $0.569 \pm 0.025$ & $0.617$ & $\mathbf{0.769}$ & $\mathbf{0.030}$ \\
+Minus minimum-norm objective & $0.513 \pm 0.020$ & $0.865$ & $0.535$ & $0.077$ \\
+Minus counterfactual boundary & $0.463 \pm 0.031$ & $\mathbf{0.472}$ & $0.551$ & $0.039$ \\
+Minus intent preservation & $0.558 \pm 0.017$ & $0.631$ & $0.730$ & $0.063$ \\
+Minus human-effort cost & $\mathbf{0.570 \pm 0.034}$ & $0.730$ & $0.712$ & $0.062$ \\
+All-corrections imitation & $0.515 \pm 0.032$ & $0.839$ & $0.548$ & $0.095$ \\
+Preference-only objective & $0.460 \pm 0.016$ & $0.490$ & $0.595$ & $0.060$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.88\linewidth]{minimum_intervention_ablation.png}
+\caption{Ablations show the efficiency mechanism is useful, but task success alone does not uniquely validate the full objective.}
+\label{fig:ablation}
+\end{figure}
+
+\section{Stress Tests}
+Stress sweeps vary human correction noise, correction delay, overcorrection bias, intent ambiguity, and combined stress. At maximum combined stress, the proposed method reaches 0.536 task success and 0.556 correction efficiency with 0.032 damage. The best non-oracle stress baseline is uncertainty querying at 0.485 task success, but the gap remains a local synthetic result.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.88\linewidth]{minimum_intervention_stress_sweep.png}
+\caption{Combined stress sweep. The proposed method is robust in simulation, but external validation is missing.}
+\label{fig:stress}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.86\linewidth]{minimum_intervention_burden.png}
+\caption{Human burden and damage on combined hard shift. Minimum intervention reduces correction magnitude and damage relative to full-correction baselines.}
+\label{fig:burden}
+\end{figure}
+
+\section{Why This Is Not Submission-Ready}
+The project fails the ICLR-main readiness gate for three reasons.
 \begin{itemize}
-\item Interactive Force Control Based on Multimodal Robot Skin for Physical Human-Robot Collaboration (2022)
-\item Human-Robot Interactive Skill Learning and Correction for Polishing Based on Dynamic Time Warping Iterative Learning Control (2024)
-\item Large Language Model-Driven 3D Hyper-Realistic Interactive Intelligent Digital Human System (2025)
-\item Towards understanding and synthesis of contact-rich anthropomorphic motions through interactive cyber-physical human (2022)
-\item Review: Large Language Model-Powered AI Systems Achieve Self-Replication with No Human Intervention (2025)
+\item \textbf{Non-decisive success margin.} The paired task-success gain over uncertainty querying is $0.03199 \pm 0.04562$.
+\item \textbf{Objective ambiguity.} Removing the human-effort cost slightly improves task success, so the full objective is supported by tradeoff metrics, not by success dominance.
+\item \textbf{Evidence ceiling.} The benchmark is deterministic and reproducible, but it is local and synthetic, not hardware evidence, not a high-fidelity simulator benchmark, and not an accepted external dataset.
 \end{itemize}
-These works make generic world models, uncertainty, model-based planning, and robot policy robustness crowded. Without real empirical evidence, the remaining novelty boundary is too weak for ICLR main.
 
-\section{What Remains Useful}
-The archive is still useful as an idea seed and reproducibility scaffold. The synthetic code, stress-test CSVs, reviewer attacks, and novelty-boundary docs can inform a future project. The correct next step is not more paper polishing; it is new evidence: implemented models, real baselines, manual related work, and robot or high-fidelity simulator validation.
+\section{Reproducibility}
+Run the benchmark from the repository root:
+\begin{verbatim}
+python src\run_experiment.py
+\end{verbatim}
+The script writes main rollouts, seed-level metrics, pairwise statistics, ablations, stress sweeps, negative cases, summary text, and the figures used in this manuscript. The canonical local PDF is \texttt{C:/Users/wangz/Downloads/85.pdf}.
 
-\section{Terminal Action}
-Decision: \textbf{KILL/ARCHIVE for ICLR main}. Do not submit this paper to ICLR main in the current form. Revival requires a substantially new empirical project.
+\section{Conclusion}
+Minimum-intervention human correction remains a strong research direction. The v4 evidence suggests a real burden/damage advantage, but the task-success margin is not decisive enough and the evidence is local-only. The honest terminal action is \textbf{KILL/ARCHIVE}.
 
 \end{document}
