@@ -21,6 +21,8 @@ Human correction data in robotics is usually treated as another demonstration, p
 \section{Terminal Decision}
 \textbf{Decision: KILL/ARCHIVE for ICLR main.} The v4 repository contains a paper-specific benchmark, strong baselines, ablations, stress tests, figures, and reproducibility files. The evidence shows a useful tradeoff, but not a decisive submission claim: the proposed learner improves human burden and damage, yet the task-success margin over the strongest active-query baseline is not statistically convincing.
 
+All reported CSV-backed results were regenerated from source on 2026-06-15. The rerun reproduced the same terminal outcome: \textbf{KILL/ARCHIVE}.
+
 \section{Research Question}
 The intended claim was:
 \begin{quote}
@@ -55,8 +57,10 @@ We compare:
 \section{Main Results}
 Table~\ref{tab:main} shows the combined hard-shift split. The proposed method has the best non-oracle task success, much better correction efficiency than full correction baselines, lower damage, and substantially lower boundary error. However, the paired success gain over uncertainty querying is only $0.03199 \pm 0.04562$, so the positive claim is not decisive.
 
-\begin{table}[h]
+\begin{table}[tbp]
 \centering
+\small
+\setlength{\tabcolsep}{3pt}
 \caption{Combined hard-shift results over seven seeds. Confidence intervals are 95\% intervals over seed means.}
 \label{tab:main}
 \begin{tabular}{lrrrr}
@@ -75,14 +79,14 @@ Oracle minimal & $0.658 \pm 0.023$ & $0.593$ & $0.888$ & $0.045$ \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.88\linewidth]{minimum_intervention_success.png}
 \caption{Task success across splits. The proposed method is useful, but its hard-split advantage over uncertainty querying is too small for a positive main claim.}
 \label{fig:success}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.86\linewidth]{minimum_intervention_efficiency.png}
 \caption{Success and normalized correction efficiency on combined hard shift. Minimum intervention improves the burden/success tradeoff.}
@@ -92,8 +96,10 @@ Oracle minimal & $0.658 \pm 0.023$ & $0.593$ & $0.888$ & $0.045$ \\
 \section{Ablations}
 The ablations support some parts of the mechanism but not enough for a main-conference claim. Removing the minimum-norm objective or imitating all corrections hurts efficiency and damage. Removing the counterfactual boundary hurts success. However, removing the human-effort cost slightly improves task success, which means the full objective is not uniquely justified by success alone.
 
-\begin{table}[h]
+\begin{table}[tbp]
 \centering
+\small
+\setlength{\tabcolsep}{3pt}
 \caption{Minimum-intervention ablations on combined hard shift.}
 \label{tab:ablation}
 \begin{tabular}{lrrrr}
@@ -111,7 +117,7 @@ Preference-only objective & $0.460 \pm 0.016$ & $0.490$ & $0.595$ & $0.060$ \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.88\linewidth]{minimum_intervention_ablation.png}
 \caption{Ablations show the efficiency mechanism is useful, but task success alone does not uniquely validate the full objective.}
@@ -121,14 +127,14 @@ Preference-only objective & $0.460 \pm 0.016$ & $0.490$ & $0.595$ & $0.060$ \\
 \section{Stress Tests}
 Stress sweeps vary human correction noise, correction delay, overcorrection bias, intent ambiguity, and combined stress. At maximum combined stress, the proposed method reaches 0.536 task success and 0.556 correction efficiency with 0.032 damage. The best non-oracle stress baseline is uncertainty querying at 0.485 task success, but the gap remains a local synthetic result.
 
-\begin{figure}[h]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.88\linewidth]{minimum_intervention_stress_sweep.png}
 \caption{Combined stress sweep. The proposed method is robust in simulation, but external validation is missing.}
 \label{fig:stress}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=0.86\linewidth]{minimum_intervention_burden.png}
 \caption{Human burden and damage on combined hard shift. Minimum intervention reduces correction magnitude and damage relative to full-correction baselines.}
@@ -148,7 +154,7 @@ Run the benchmark from the repository root:
 \begin{verbatim}
 python src\run_experiment.py
 \end{verbatim}
-The script writes main rollouts, seed-level metrics, pairwise statistics, ablations, stress sweeps, negative cases, summary text, and the figures used in this manuscript. The canonical local PDF is \texttt{C:/Users/wangz/Downloads/85.pdf}.
+The script writes main rollouts, seed-level metrics, pairwise statistics, ablations, stress sweeps, negative cases, summary text, and the figures used in this manuscript. The 2026-06-15 audit verified 53,760 main rollout rows, 9,408 ablation rollout rows, 117,600 stress rollout rows, and seven seeds. The canonical local PDF is \texttt{C:/Users/wangz/Downloads/85.pdf}.
 
 \section{Conclusion}
 Minimum-intervention human correction remains a strong research direction. The v4 evidence suggests a real burden/damage advantage, but the task-success margin is not decisive enough and the evidence is local-only. The honest terminal action is \textbf{KILL/ARCHIVE}.

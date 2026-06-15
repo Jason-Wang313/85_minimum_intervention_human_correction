@@ -13,7 +13,7 @@
 - Toward Zero-Human-Intervention Autonomous Robot Learning: A Continuous Result-Driven Self-Reward and Correction Framework (n.d.)
 
         ## ICLR Main Response
-        A hostile ICLR reviewer would be correct to reject this as a main-conference submission. The v2 paper has reproducible synthetic evidence and careful limitations, but it does not contain the real robot, high-fidelity simulator, learned model, or manual related-work depth needed for the ICLR main track.
+        A hostile ICLR reviewer would be correct to reject this as a main-conference submission. The v4 paper has reproducible synthetic evidence and careful limitations, but it does not contain the real robot, high-fidelity simulator, learned model, real human-correction traces, or manual related-work depth needed for the ICLR main track. The 2026-06-15 rerun also confirms that the task-success gain over uncertainty querying is non-decisive even though efficiency and damage improve.
 
         ## Honest Action
         The paper is marked `KILL_ARCHIVE`. This avoids converting a generated workshop-style idea into an overstated main-conference claim.
