@@ -4,6 +4,8 @@ Submission-hardening version: v4
 
 Terminal decision: **KILL_ARCHIVE** for ICLR main conference.
 
+Latest audit rerun: 2026-06-15.
+
 This repository contains a reproducible local evidence audit for the research bet:
 
 > Learn from the smallest human correction that changes physical outcome.
@@ -12,6 +14,7 @@ The v4 rebuild replaces the template scaffold with a deterministic local correct
 
 ## Why This Is Archived
 
+- The 2026-06-15 rerun regenerated 53,760 main rollouts, 9,408 ablation rollouts, and 117,600 stress rollouts.
 - On the combined hard-shift split, `minimum_intervention_learner` reaches `0.56919 +/- 0.02468` task success.
 - The strongest success baseline, `uncertainty_query_policy`, reaches `0.53720 +/- 0.02611`.
 - The paired task-success difference is only `0.03199 +/- 0.04562`.

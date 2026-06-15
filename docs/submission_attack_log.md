@@ -192,3 +192,17 @@ Attack: No meaningful recoverable ICLR-main issue remains after archiving.
 Verdict: Terminal condition reached.
 
 Action: Mark KILL_ARCHIVE and stop.
+
+## ICLR Main Gate Round 28
+Attack: The promising efficiency and damage tradeoff may be enough for ICLR main.
+
+Verdict: Insufficient. The efficiency improvement is real (`0.12153 +/- 0.04126`), but the primary task-success margin over uncertainty querying is non-decisive (`0.03199 +/- 0.04562`), and the evidence is local synthetic only.
+
+Action: Preserve the tradeoff as useful negative-result evidence, not a submission-ready claim.
+
+## ICLR Main Gate Round 29
+Attack: The negative decision might be stale before the latest rerun.
+
+Verdict: Rejected. The 2026-06-15 rerun reproduced 53,760 main rollouts, 9,408 ablation rollouts, 117,600 stress rollouts, and `terminal=KILL_ARCHIVE`.
+
+Action: Preserve `KILL_ARCHIVE`.

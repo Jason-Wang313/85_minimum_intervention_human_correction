@@ -24,3 +24,9 @@
 - Ablation result: removing human-effort cost slightly improves task success while worsening efficiency/damage.
 - Recompiled the canonical PDF with `Submission-hardening version: v4`.
 - Terminal decision: KILL_ARCHIVE.
+
+## v4.1 - 2026-06-15 Rerun Audit
+- Added the paper-specific ICLR-main execution plan before running any new evidence.
+- Re-ran `python src\run_experiment.py` from source and reproduced `terminal=KILL_ARCHIVE`.
+- Verified 53,760 main rollouts, 9,408 ablation rollouts, 117,600 stress rollouts, seven seeds, eight methods, seven ablations, five stress axes, four tasks, and four negative cases.
+- Preserved the terminal decision because the primary task-success gain remains non-decisive and the objective ablation still slightly improves success.
