@@ -1,13 +1,20 @@
 # Submission Readiness Decision
 
-Decision: KILL_ARCHIVE
+Last update: 2026-06-21 23:35:31 +08:00
 
-Last update: 2026-06-15 09:30:48 +01:00
+Decision: **KILL_ARCHIVE**
 
-ICLR main-conference readiness: NO.
+ICLR main ready: **no**
 
-Reason: The 2026-06-15 v4 rerun confirms the non-decisive result. The minimum-intervention learner improves correction efficiency and damage, but its task-success gain over uncertainty querying remains non-decisive (`0.03199 +/- 0.04562`). The full objective is not uniquely validated by task success because `minus_human_effort_cost` slightly improves success (`0.56994` versus `0.56919`) while worsening efficiency and damage. The paper also still lacks real-robot or high-fidelity simulator validation, real human correction traces, and manual full-paper related-work depth.
+The v5 expanded rebuild substantially improves Paper 85 as an audit artifact: it adds a frozen plan, new theory, stronger baselines, 199,680 main rollouts, 33,600 ablation rows, 302,400 stress rows, 69,120 fixed-risk rows, 24 negative cases, a 28-page PDF, bright boxed clickable citation links, and machine validation.
 
-Honest terminal action: archive/kill for ICLR main. Do not submit this paper to ICLR main in its current form.
+It still fails the submission-readiness gate:
 
-Revival condition: rebuild as a real empirical robotics paper with robot or accepted high-fidelity human-correction data, a learned boundary/correction model, modern active-learning/preference/residual baselines, manual related work, and decisive paired gains in task success, burden, and safety.
+- `minimum_intervention_boundary_learner_v5` loses hard-aggregate task success to `robust_mpc_correction`.
+- It also loses hard-aggregate correction efficiency to `robust_mpc_correction`.
+- Paired lower95 bounds for success and efficiency are negative.
+- Mechanism ablations beat the full method.
+- Fixed-risk deployment coverage at budget `0.05` is zero.
+- The evidence is synthetic/local only and lacks real robot or accepted high-fidelity benchmark validation.
+
+Terminal action: archive as a negative result. Do not submit as an ICLR-main paper without new external robot or high-fidelity evidence and a method that clears the frozen gates.
