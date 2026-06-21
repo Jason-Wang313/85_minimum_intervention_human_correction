@@ -30,3 +30,11 @@
 - Re-ran `python src\run_experiment.py` from source and reproduced `terminal=KILL_ARCHIVE`.
 - Verified 53,760 main rollouts, 9,408 ablation rollouts, 117,600 stress rollouts, seven seeds, eight methods, seven ablations, five stress axes, four tasks, and four negative cases.
 - Preserved the terminal decision because the primary task-success gain remains non-decisive and the objective ablation still slightly improves success.
+
+## v5 - 2026-06-21 Expanded Submission-Readiness Audit
+- Wrote `docs/paper85_expanded_submission_plan_20260621.md` before modifying code.
+- Replaced the v4 runner with a frozen CPU-only, RAM-light protocol over 10 seeds, 6 tasks, 8 splits, 13 methods, 10 ablations, 6 stress axes, fixed-risk deployment budgets, and 24 negative cases.
+- Generated 199,680 main rollouts, 15,360 scene summaries, 33,600 ablation rows, 302,400 stress rows, and 69,120 fixed-risk rows.
+- Generated a 28-page ICLR-style manuscript with theory, full appendices, bright boxed clickable citation links, and a clean citation/reference log.
+- Validated `C:/Users/wangz/Downloads/85.pdf`; SHA256 `3A689EE96ED760908FCE9678AA3A3667B9C768F2218D06272EE382EDDD121406`; no Desktop PDF.
+- Terminal decision remains `KILL_ARCHIVE` because v5 loses to `robust_mpc_correction`, paired lower95 bounds are negative, mechanism ablations beat the full method, fixed-risk coverage at budget 0.05 is zero, and no real robot or accepted high-fidelity benchmark evidence exists.

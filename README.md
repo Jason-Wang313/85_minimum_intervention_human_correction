@@ -1,51 +1,43 @@
 # 85 Minimum-Intervention Human Correction
 
-Submission-hardening version: v4
+Submission-hardening version: v5 expanded audit
 
 Terminal decision: **KILL_ARCHIVE** for ICLR main conference.
 
-Latest audit rerun: 2026-06-15.
+Latest audit rerun: 2026-06-21.
 
 This repository contains a reproducible local evidence audit for the research bet:
 
 > Learn from the smallest human correction that changes physical outcome.
 
-The v4 rebuild replaces the template scaffold with a deterministic local correction benchmark over four manipulation tasks, five correction-shift splits, eight methods, ablations, stress sweeps, and negative cases.
+The v5 rebuild expands the old 5-page v4 memo into a 28-page ICLR-style negative audit with new theory, stronger baselines, fixed-risk deployment tests, full appendices, and bright boxed clickable citation links.
 
 ## Why This Is Archived
 
-- The 2026-06-15 rerun regenerated 53,760 main rollouts, 9,408 ablation rollouts, and 117,600 stress rollouts.
-- On the combined hard-shift split, `minimum_intervention_learner` reaches `0.56919 +/- 0.02468` task success.
-- The strongest success baseline, `uncertainty_query_policy`, reaches `0.53720 +/- 0.02611`.
-- The paired task-success difference is only `0.03199 +/- 0.04562`.
-- The proposed learner has better correction efficiency (`0.76851`) and lower damage (`0.02976`), but this is a tradeoff result rather than a decisive task-success win.
-- The `minus_human_effort_cost` ablation slightly improves task success (`0.56994`) while losing efficiency/damage, so the full objective is not uniquely validated by success.
-- The evidence is local and synthetic, not hardware or accepted high-fidelity benchmark validation.
+- The frozen v5 protocol regenerated 199,680 main rollouts, 15,360 scene summaries, 33,600 ablation rollouts, 302,400 stress rows, 69,120 fixed-risk rows, and 24 negative cases.
+- On the hard aggregate, `minimum_intervention_boundary_learner_v5` reaches `0.48958 +/- 0.01057` task success and `0.69909` correction efficiency.
+- The strongest non-oracle baseline, `robust_mpc_correction`, reaches `0.59010 +/- 0.01426` task success and `0.88048` correction efficiency.
+- Paired lower95 bounds are negative: task success `-0.11788`; correction efficiency `-0.20944`.
+- Mechanism ablations beat the full method: `minus_human_effort_cost` reaches `0.77648` robust utility versus `0.67199` for the full v5 method.
+- Fixed-risk deployment coverage at budget `0.05` collapses to zero on both fixed-risk splits.
+- The evidence is still local and synthetic, with no real robot or accepted high-fidelity benchmark validation.
 
 ## Reproduce
 
 ```powershell
 python src\run_experiment.py
-```
-
-The runner writes:
-
-- `results/rollouts.csv`
-- `results/raw_seed_metrics.csv`
-- `results/metrics.csv`
-- `results/pairwise_stats.csv`
-- `results/ablation_metrics.csv`
-- `results/stress_sweep.csv`
-- `results/negative_cases.csv`
-- `results/summary.txt`
-- `figures/minimum_intervention_*.png`
-
-## Rebuild PDF
-
-```powershell
+python scripts\generate_manuscript.py
 cd paper
 pdflatex -interaction=nonstopmode -halt-on-error main.tex
+bibtex main
 pdflatex -interaction=nonstopmode -halt-on-error main.tex
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+pdflatex -interaction=nonstopmode -halt-on-error main.tex
+cd ..
+Copy-Item -LiteralPath paper\main.pdf -Destination C:\Users\wangz\Downloads\85.pdf -Force
+python scripts\validate_submission_artifacts.py
 ```
 
 Canonical local PDF: `C:/Users/wangz/Downloads/85.pdf`
+
+PDF SHA256: `3A689EE96ED760908FCE9678AA3A3667B9C768F2218D06272EE382EDDD121406`

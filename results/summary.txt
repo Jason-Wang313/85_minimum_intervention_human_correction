@@ -1,35 +1,105 @@
-Paper 85 minimum_intervention_human_correction v4 rebuild
+Paper 85 minimum_intervention_human_correction v5 expanded audit
 Terminal recommendation: KILL_ARCHIVE
-Reason: deterministic local human-correction benchmark added; no robot hardware or external high-fidelity benchmark is available.
-Main rollout rows: 53760
-Ablation rollout rows: 9408
-Stress rollout rows: 117600
-Seeds: [0, 1, 2, 3, 4, 5, 6]
+ICLR main ready: no
+Reason: CPU-only expanded benchmark adds stronger baselines, theory hooks, ablations, stress sweeps, and fixed-risk tests, but no real robot or accepted high-fidelity benchmark evidence exists.
+Main rollout rows: 199680
+Dataset summary rows: 15360
+Main seed-metric rows: 1040
+Main metric rows: 1352
+Main pairwise rows: 768
+Hard aggregate seed rows: 130
+Hard aggregate metric rows: 169
+Hard aggregate pairwise rows: 96
+Ablation rollout rows: 33600
+Ablation seed rows: 200
+Ablation metric rows: 20
+Stress raw rows: 302400
+Stress seed rows: 2520
+Stress metric rows: 252
+Fixed-risk raw rows: 69120
+Fixed-risk seed rows: 480
+Fixed-risk metric rows: 48
+Fixed-risk pairwise rows: 200
+Negative cases: 24
 
-Combined hard shift:
-no_human_baseline task_success=0.18675 ci95=0.01534 magnitude=0.00000 efficiency=0.00000 damage=0.03720 intent=0.62000 boundary_error=1.00000
-full_demo_imitation task_success=0.51265 ci95=0.01541 magnitude=0.87996 efficiency=0.52162 damage=0.08780 intent=0.54287 boundary_error=0.53411
-dagger_full_correction task_success=0.50893 ci95=0.02824 magnitude=0.74102 efficiency=0.56085 damage=0.06845 intent=0.54299 boundary_error=0.40202
-residual_correction_learner task_success=0.53199 ci95=0.02640 magnitude=0.68857 efficiency=0.61229 damage=0.06324 intent=0.52423 boundary_error=0.45143
-preference_only_ranker task_success=0.49926 ci95=0.03025 magnitude=0.51020 efficiency=0.64698 damage=0.03274 intent=0.51931 boundary_error=0.21411
-uncertainty_query_policy task_success=0.53720 ci95=0.02611 magnitude=0.77881 efficiency=0.60334 damage=0.07812 intent=0.53307 boundary_error=0.40453
-minimum_intervention_learner task_success=0.56919 ci95=0.02468 magnitude=0.61685 efficiency=0.76851 damage=0.02976 intent=0.52521 boundary_error=0.16169
-oracle_minimal_correction task_success=0.65774 ci95=0.02258 magnitude=0.59254 efficiency=0.88796 damage=0.04464 intent=0.53020 boundary_error=0.04800
-paired task-success diff vs best success baseline uncertainty_query_policy=0.03199 ci95=0.04562
-paired efficiency diff vs best efficiency baseline preference_only_ranker=0.12153 ci95=0.04126
+Frozen hard-aggregate gate:
+best_success_reference=robust_mpc_correction
+best_efficiency_reference=robust_mpc_correction
+proposal_success=0.48958
+best_success=0.59010
+proposal_efficiency=0.69909
+best_efficiency=0.88048
+proposal_damage=0.04688
+best_success_reference_damage=0.05243
+paired_success_lower95=-0.11788
+paired_efficiency_lower95=-0.20944
+main_gate=False
+mechanism_gate=False
+stress_gate=True
+stress_dominated_by=none
+fixed_risk_gate=False
+scope_gate=False
+dynamics_mismatch: v5_coverage=0.00000, best_feasible_coverage=0.00000, v5_success=0.00000, best_feasible_success=0.00000 | combined_hard_shift: v5_coverage=0.00000, best_feasible_coverage=0.00000, v5_success=0.00000, best_feasible_success=0.00000
 
-Ablations:
-full_minimum_intervention_learner task_success=0.56919 ci95=0.02468 magnitude=0.61685 efficiency=0.76851 damage=0.02976 intent=0.52521 boundary_error=0.16169
-minus_minimum_norm_objective task_success=0.51265 ci95=0.01966 magnitude=0.86478 efficiency=0.53510 damage=0.07664 intent=0.53937 boundary_error=0.51149
-minus_counterfactual_boundary task_success=0.46280 ci95=0.03106 magnitude=0.47160 efficiency=0.55090 damage=0.03944 intent=0.53754 boundary_error=0.28954
-minus_intent_preservation task_success=0.55804 ci95=0.01688 magnitude=0.63139 efficiency=0.73044 damage=0.06324 intent=0.49478 boundary_error=0.22085
-minus_human_effort_cost task_success=0.56994 ci95=0.03428 magnitude=0.72979 efficiency=0.71189 damage=0.06176 intent=0.53009 boundary_error=0.32293
-all_corrections_imitation task_success=0.51488 ci95=0.03247 magnitude=0.83917 efficiency=0.54826 damage=0.09524 intent=0.53838 boundary_error=0.48196
-preference_only_objective task_success=0.45982 ci95=0.01648 magnitude=0.48973 efficiency=0.59521 damage=0.06027 intent=0.51360 boundary_error=0.22664
+Hard aggregate metrics:
+no_human_baseline task_success=0.11840 ci95=0.01162 efficiency=0.00000 damage=0.04688 unsafe=0.07639 robust_utility=0.19925
+full_demo_imitation task_success=0.32396 ci95=0.01081 efficiency=0.34149 damage=0.06736 unsafe=0.12986 robust_utility=0.39495
+dagger_full_correction task_success=0.34392 ci95=0.01705 efficiency=0.37630 damage=0.05260 unsafe=0.12951 robust_utility=0.43224
+residual_correction_learner task_success=0.31771 ci95=0.01153 efficiency=0.36725 damage=0.05347 unsafe=0.11910 robust_utility=0.42774
+preference_only_ranker task_success=0.46493 ci95=0.01593 efficiency=0.65764 damage=0.05174 unsafe=0.11511 robust_utility=0.63883
+uncertainty_query_policy task_success=0.38576 ci95=0.01607 efficiency=0.46226 damage=0.05798 unsafe=0.12066 robust_utility=0.50700
+active_entropy_query_policy task_success=0.42917 ci95=0.01076 efficiency=0.58779 damage=0.04740 unsafe=0.10156 robust_utility=0.59279
+safety_filtered_residual task_success=0.34097 ci95=0.01232 efficiency=0.43098 damage=0.04444 unsafe=0.01337 robust_utility=0.49965
+robust_mpc_correction task_success=0.59010 ci95=0.01426 efficiency=0.88048 damage=0.05243 unsafe=0.02066 robust_utility=0.82286
+inverse_rl_correction_proxy task_success=0.42882 ci95=0.00920 efficiency=0.56504 damage=0.04584 unsafe=0.12014 robust_utility=0.58810
+minimum_intervention_learner_v4 task_success=0.53733 ci95=0.00925 efficiency=0.78867 damage=0.05243 unsafe=0.12361 robust_utility=0.72550
+minimum_intervention_boundary_learner_v5 task_success=0.48958 ci95=0.01057 efficiency=0.69909 damage=0.04688 unsafe=0.01250 robust_utility=0.69665
+oracle_minimal_correction task_success=0.58819 ci95=0.01324 efficiency=0.84217 damage=0.04080 unsafe=0.00764 robust_utility=0.82894
 
-Combined stress level 1.0:
-full_demo_imitation task_success=0.46939 ci95=0.04198 magnitude=1.43531 efficiency=0.32023 damage=0.13648 intent=0.49143
-residual_correction_learner task_success=0.46811 ci95=0.04628 magnitude=1.02424 efficiency=0.38984 damage=0.08546 intent=0.48894
-uncertainty_query_policy task_success=0.48469 ci95=0.02151 magnitude=1.22028 efficiency=0.36353 damage=0.08929 intent=0.48172
-minimum_intervention_learner task_success=0.53571 ci95=0.03285 magnitude=0.80035 efficiency=0.55623 damage=0.03189 intent=0.46773
-oracle_minimal_correction task_success=0.64923 ci95=0.02746 magnitude=0.80857 efficiency=0.67650 damage=0.04209 intent=0.47880
+Key paired hard-aggregate differences:
+v5_minus_robust_mpc_correction task_success: mean=-0.10052 ci95=0.01736 lower95=-0.11788
+v5_minus_robust_mpc_correction correction_efficiency: mean=-0.18139 ci95=0.02805 lower95=-0.20944
+v5_minus_robust_mpc_correction damage: mean=-0.00556 ci95=0.00519 lower95=-0.01075
+v5_minus_robust_mpc_correction robust_utility: mean=-0.12621 ci95=0.02376 lower95=-0.14997
+v5_minus_minimum_intervention_learner_v4 task_success: mean=-0.04774 ci95=0.01771 lower95=-0.06545
+v5_minus_minimum_intervention_learner_v4 correction_efficiency: mean=-0.08957 ci95=0.02669 lower95=-0.11627
+v5_minus_minimum_intervention_learner_v4 damage: mean=-0.00556 ci95=0.00998 lower95=-0.01553
+v5_minus_minimum_intervention_learner_v4 robust_utility: mean=-0.02885 ci95=0.02284 lower95=-0.05169
+
+Ablation utility:
+full_minimum_intervention_boundary_learner_v5 success=0.48304 efficiency=0.64895 damage=0.05030 utility=0.67199
+minus_minimum_norm_objective success=0.55922 efficiency=0.76493 damage=0.05208 utility=0.76607
+minus_counterfactual_boundary success=0.43304 efficiency=0.55961 damage=0.04078 utility=0.61313
+minus_intent_preservation success=0.48125 efficiency=0.64595 damage=0.04791 utility=0.66943
+minus_human_effort_cost success=0.56548 efficiency=0.77961 damage=0.05060 utility=0.77648
+minus_safety_override success=0.55595 efficiency=0.77089 damage=0.05476 utility=0.75679
+minus_query_throttling success=0.51488 efficiency=0.69161 damage=0.03899 utility=0.71843
+minus_calibration success=0.50595 efficiency=0.68276 damage=0.04583 utility=0.70399
+all_corrections_imitation success=0.37857 efficiency=0.41767 damage=0.05536 utility=0.50768
+preference_only_objective success=0.46131 efficiency=0.61377 damage=0.06191 utility=0.63445
+
+Maximum combined stress:
+full_demo_imitation task_success=0.19667 efficiency=0.15280 damage=0.10083 unsafe=0.20667 utility=0.16236
+residual_correction_learner task_success=0.18750 efficiency=0.18183 damage=0.05583 unsafe=0.17417 utility=0.23188
+uncertainty_query_policy task_success=0.27750 efficiency=0.24818 damage=0.07833 unsafe=0.18917 utility=0.30270
+active_entropy_query_policy task_success=0.33917 efficiency=0.40884 damage=0.06000 unsafe=0.12917 utility=0.43165
+robust_mpc_correction task_success=0.51833 efficiency=0.66019 damage=0.06083 unsafe=0.05334 utility=0.67251
+minimum_intervention_boundary_learner_v5 task_success=0.43500 efficiency=0.53213 damage=0.05917 unsafe=0.04000 utility=0.57371
+oracle_minimal_correction task_success=0.58250 efficiency=0.72268 damage=0.05500 unsafe=0.02417 utility=0.76683
+
+Fixed-risk budget 0.05:
+combined_hard_shift active_entropy_query_policy coverage=0.00000 accepted_success=0.00000 accepted_damage=0.00000 accepted_unsafe=0.00000
+combined_hard_shift minimum_intervention_boundary_learner_v5 coverage=0.00000 accepted_success=0.00000 accepted_damage=0.00000 accepted_unsafe=0.00000
+combined_hard_shift oracle_minimal_correction coverage=0.00000 accepted_success=0.00000 accepted_damage=0.00000 accepted_unsafe=0.00000
+combined_hard_shift robust_mpc_correction coverage=0.00000 accepted_success=0.00000 accepted_damage=0.00000 accepted_unsafe=0.00000
+combined_hard_shift safety_filtered_residual coverage=0.00000 accepted_success=0.00000 accepted_damage=0.00000 accepted_unsafe=0.00000
+combined_hard_shift uncertainty_query_policy coverage=0.00000 accepted_success=0.00000 accepted_damage=0.00000 accepted_unsafe=0.00000
+dynamics_mismatch active_entropy_query_policy coverage=0.00000 accepted_success=0.00000 accepted_damage=0.00000 accepted_unsafe=0.00000
+dynamics_mismatch minimum_intervention_boundary_learner_v5 coverage=0.00000 accepted_success=0.00000 accepted_damage=0.00000 accepted_unsafe=0.00000
+dynamics_mismatch oracle_minimal_correction coverage=0.00000 accepted_success=0.00000 accepted_damage=0.00000 accepted_unsafe=0.00000
+dynamics_mismatch robust_mpc_correction coverage=0.00000 accepted_success=0.00000 accepted_damage=0.00000 accepted_unsafe=0.00000
+dynamics_mismatch safety_filtered_residual coverage=0.00000 accepted_success=0.00000 accepted_damage=0.00000 accepted_unsafe=0.00000
+dynamics_mismatch uncertainty_query_policy coverage=0.00000 accepted_success=0.00000 accepted_damage=0.00000 accepted_unsafe=0.00000
+
+Negative cases: 24
+terminal=KILL_ARCHIVE
